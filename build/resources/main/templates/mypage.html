@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 집주인 평가 사이트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav{
+            padding: 20px;
+            width: 200px;
+            float: left;
+            height: 100%;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav li {
+            margin-bottom: 10px;
+        }
+        nav li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        .container {
+            margin-left: 220px; /* 네비게이션 바 너비와 여백을 고려하여 설정 */
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+        #main{
+            text-decoration: none;
+            color: white;
+        }
+        #left-menu{
+            background: #f4f4f4;
+        }
+        header nav a{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
+    <nav>
+        <a href="#">로그아웃</a>
+    </nav>
+</header>
+
+<nav id="left-menu">
+    <ul>
+        <li><a href="#">프로필</a></li>
+        <li><a href="#">평가 내역</a></li>
+        <li><a href="#">설정</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>마이페이지</h2>
+    <p>이 페이지는 여러분의 개인 정보와 설정을 관리할 수 있는 곳입니다.</p>
+</div>
+
+</body>
+</html>

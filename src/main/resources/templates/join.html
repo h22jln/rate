@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - 집주인 평가 사이트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+        #main{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
+</header>
+
+<div class="container">
+    <h2>회원가입</h2>
+    <form action="#" method="post">
+        <label for="userName">이름</label>
+        <input type="text" id="userName" name="userName" required>
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname" required>
+        <label for="userId">아이디</label>
+        <input type="text" id="userId" name="userId" required>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" required>
+        <label for="passwordCheck">비밀번호 확인</label>
+        <input type="password" id="passwordCheck" name="passwordCheck" required>
+        <input type="submit" value="회원가입">
+    </form>
+</div>
+
+</body>
+</html>
