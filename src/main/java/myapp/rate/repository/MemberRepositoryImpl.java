@@ -17,7 +17,7 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public int joinMember(JoinForm joinForm) {
-        String sql = "insert into rate_member(user_id, user_pw, user_nickname, user_name, join_date) values(?, ?, ?, ?)";
+        String sql = "insert into rate_member(user_id, user_pw, user_nickname, user_name, join_date) values(?, ?, ?, ?, NOW())";
         return template.update(sql,
                 joinForm.getId(),
                 joinForm.getPassword(),

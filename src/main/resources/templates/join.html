@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +58,9 @@
         .field-error {
             color: #dc3545;
         }
+        input[type=checkbox]{
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
@@ -80,14 +86,24 @@
 
         <label for="nickname">닉네임</label>
         <input type="text" id="nickname" name="nickname" th:field="*{nickname}">
+        <input type="button" value="닉네임 중복체크" onclick="funcNicknameValid()">
+        <input type="checkbox" id="nicknameValid" name="nicknameValid" th:field="*{nicknameValid}" th:checked="false" />
         <div class="field-error" th:errors="*{nickname}">
             닉네임 오류
+        </div>
+        <div class="field-error" th:errors="*{nicknameValid}">
+            닉네임 중복체크 오류
         </div>
 
         <label for="userId">아이디</label>
         <input type="text" id="userId" name="userId" th:field="*{id}">
+        <input type="button" value="아이디 중복체크" onclick="funcIdValid()">
+        <input type="checkbox" id="idValid" name="idValid" th:field="*{idValid}" th:checked="false"/>
         <div class="field-error" th:errors="*{id}">
             아이디 오류
+        </div>
+        <div class="field-error" th:errors="*{idValid}">
+            아이디 중복체크 오류
         </div>
 
         <label for="password">비밀번호</label>
@@ -108,3 +124,80 @@
 
 </body>
 </html>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // 입력 상자에 대한 input 이벤트 리스너
+        // 아이디 input에 입력이 발생한 경우
+        $("#userName").on("input", function() {
+            $("#idValid").prop("checked", false);
+        });
+        // 닉네임 input에 입력이 발생한 경우
+        $("#nickname").on("input", function() {
+            console.log(1)
+            $("#nicknameValid").prop("checked", false);
+        });
+    });
+    // 아이디 중복 여부
+    function funcIdValid(){
+        $.ajax( "/idValid",
+            {
+                method: 'get',
+                data : { id: $('#userId').val()},
+                dataType: 'json'
+            }
+        )
+            .done(function(data) {
+                var idJSONVal = JSON.stringify(data);
+                var result = checkValid(idJSONVal);
+                if(result){
+                    $("#idValid").prop("checked", true);
+                }
+            })
+            .fail(function() {
+                alert( "다시 시도해주세요" );
+            })
+    }
+
+    // 닉네임 중복 여부
+    function funcNicknameValid(){
+        $.ajax( "/nicknameValid",
+            {
+                method: 'get',
+                data : { nickname: $('#nickname').val()},
+                dataType: 'json'
+            }
+        )
+            .done(function(data) {
+                var nicknameJSONVal = JSON.stringify(data);
+                var result = checkValid(nicknameJSONVal);
+                if(result){
+                    $("#nicknameValid").prop("checked", true);
+                }
+            })
+            .fail(function() {
+                alert( "다시 시도해주세요" );
+            })
+    }
+
+    function checkValid(json){
+        console.log(json)
+        json = JSON.parse(json);
+        var msg = "";
+        // 유효성 검사 성공이라면
+        if(json.duplicate == '' && json.length == ''){
+            msg += "[성공] 중복된 값이 없습니다"
+            alert(msg)
+            return true;
+        }
+
+        // 중복된 값이 있는 경우
+        if(json.duplicate != ''){
+            msg += json.duplicate + '\n';
+        }
+        // 길이가 맞지 않는 경우
+        if(json.length != ''){
+            msg += json.length;
+        }
+        alert(msg)
+    }
+</script>
