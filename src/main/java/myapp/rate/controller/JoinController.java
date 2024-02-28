@@ -54,6 +54,12 @@ public class JoinController {
     @ResponseBody
     public Map<String, String> idValid(@RequestParam String id){
         Map<String, String> result = new HashMap<>();
+
+        if(id.isEmpty()){
+            result.put("null", "값을 입력하세요");
+            return result;
+        }
+
         boolean duplicate = memberService.idDuplicateCheck(id);
         boolean idLength = id.length() >= 4 && id.length() <= 10 ? true : false;
 
@@ -76,6 +82,12 @@ public class JoinController {
     @ResponseBody
     public Map<String, String> nicknameValid(@RequestParam String nickname){
         Map<String, String> result = new HashMap<>();
+
+        if(nickname.isEmpty()){
+            result.put("null", "값을 입력하세요");
+            return result;
+        }
+
         boolean duplicate = memberService.nicknameDuplicateCheck(nickname);
         boolean idLength = nickname.length() <= 10 ? true : false;
 

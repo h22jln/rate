@@ -1,7 +1,8 @@
 package myapp.rate.domain;
 
+import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,31 +14,29 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JoinForm {
-    @NotNull
+    @NotBlank
     @Size(min = 4, max = 10)
     private String id;
 
-    @NotNull
     @AssertTrue
     private Boolean idValid;
 
-    @NotNull
+    @NotBlank
     @Size(min = 1, max = 10)
     private String nickname;
 
-    @NotNull
     @AssertTrue
     private Boolean nicknameValid;
 
-    @NotNull
+    @NotBlank
     @Size(min = 8, max = 20)
     private String password;
 
-    @NotNull
+    @NotBlank
     @Size(min = 8, max = 20)
     private String passwordCheck;
 
-    @NotNull
+    @NotBlank
     @Size(min = 1, max = 10)
     private String name;
 }

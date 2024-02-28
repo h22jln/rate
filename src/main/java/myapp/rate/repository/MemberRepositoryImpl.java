@@ -1,6 +1,7 @@
 package myapp.rate.repository;
 
 import myapp.rate.domain.JoinForm;
+import myapp.rate.service.PasswordHashing;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,7 @@ public class MemberRepositoryImpl implements MemberRepository {
         String sql = "insert into rate_member(user_id, user_pw, user_nickname, user_name, join_date) values(?, ?, ?, ?, NOW())";
         return template.update(sql,
                 joinForm.getId(),
-                joinForm.getPassword(),
+                PasswordHashing.hashPassword(joinForm.getPassword()),
                 joinForm.getNickname(),
                 joinForm.getName());
     }

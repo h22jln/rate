@@ -59,7 +59,7 @@
             color: #dc3545;
         }
         input[type=checkbox]{
-            visibility: hidden;
+            display: none;
         }
     </style>
 </head>
@@ -88,6 +88,7 @@
         <input type="text" id="nickname" name="nickname" th:field="*{nickname}">
         <input type="button" value="닉네임 중복체크" onclick="funcNicknameValid()">
         <input type="checkbox" id="nicknameValid" name="nicknameValid" th:field="*{nicknameValid}" th:checked="false" />
+        <p id="nickname-check-done" style="display: none">닉네임 중복 체크완료</p>
         <div class="field-error" th:errors="*{nickname}">
             닉네임 오류
         </div>
@@ -99,6 +100,7 @@
         <input type="text" id="userId" name="userId" th:field="*{id}">
         <input type="button" value="아이디 중복체크" onclick="funcIdValid()">
         <input type="checkbox" id="idValid" name="idValid" th:field="*{idValid}" th:checked="false"/>
+        <p id="id-check-done" style="display: none">아이디 중복 체크완료</p>
         <div class="field-error" th:errors="*{id}">
             아이디 오류
         </div>
@@ -130,11 +132,12 @@
         // 아이디 input에 입력이 발생한 경우
         $("#userName").on("input", function() {
             $("#idValid").prop("checked", false);
+            $('#id-check-done').css('display', 'none');
         });
         // 닉네임 input에 입력이 발생한 경우
         $("#nickname").on("input", function() {
-            console.log(1)
             $("#nicknameValid").prop("checked", false);
+            $('#nickname-check-done').css('display', 'none');
         });
     });
     // 아이디 중복 여부
@@ -151,6 +154,7 @@
                 var result = checkValid(idJSONVal);
                 if(result){
                     $("#idValid").prop("checked", true);
+                    $('#id-check-done').css('display','block');
                 }
             })
             .fail(function() {
@@ -172,6 +176,7 @@
                 var result = checkValid(nicknameJSONVal);
                 if(result){
                     $("#nicknameValid").prop("checked", true);
+                    $('#nickname-check-done').css('display','block');
                 }
             })
             .fail(function() {
@@ -182,12 +187,20 @@
     function checkValid(json){
         console.log(json)
         json = JSON.parse(json);
+
         var msg = "";
+
         // 유효성 검사 성공이라면
         if(json.duplicate == '' && json.length == ''){
             msg += "[성공] 중복된 값이 없습니다"
             alert(msg)
             return true;
+        }
+
+        if(json.null != ''){
+            msg += "값을 입력하세요";
+            alert(msg)
+            return false;
         }
 
         // 중복된 값이 있는 경우
@@ -198,6 +211,7 @@
         if(json.length != ''){
             msg += json.length;
         }
-        alert(msg)
+        alert(msg);
+        return false;
     }
 </script>
