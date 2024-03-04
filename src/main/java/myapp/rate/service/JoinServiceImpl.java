@@ -5,12 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import myapp.rate.domain.JoinForm;
 import myapp.rate.repository.MemberRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService {
+public class JoinServiceImpl implements JoinService {
     private final MemberRepository repository;
 
     @Override

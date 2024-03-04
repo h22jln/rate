@@ -3,7 +3,7 @@ package myapp.rate.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myapp.rate.domain.JoinForm;
-import myapp.rate.service.MemberService;
+import myapp.rate.service.JoinService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +17,17 @@ import java.util.Map;
 @Controller
 @Slf4j
 @AllArgsConstructor
+@RequestMapping("/join")
 public class JoinController {
-    private final MemberService memberService;
+    private final JoinService joinService;
     private final MessageSource messageSource;
 
-    @GetMapping("/join")
+    @GetMapping
     public String join(Model model){
         model.addAttribute("joinForm", new JoinForm());
         return "join";
     }
-    @PostMapping("/join")
+    @PostMapping
     public String joinProceed(@Validated @ModelAttribute("joinForm") JoinForm form,
                               BindingResult bindingResult){
 
@@ -44,7 +45,7 @@ public class JoinController {
         }
 
         // DB접근
-        memberService.joinProceed(form);
+        joinService.joinProceed(form);
 
 
         return "redirect:/";
@@ -60,7 +61,7 @@ public class JoinController {
             return result;
         }
 
-        boolean duplicate = memberService.idDuplicateCheck(id);
+        boolean duplicate = joinService.idDuplicateCheck(id);
         boolean idLength = id.length() >= 4 && id.length() <= 10 ? true : false;
 
         String duplicateError = "";
@@ -88,7 +89,7 @@ public class JoinController {
             return result;
         }
 
-        boolean duplicate = memberService.nicknameDuplicateCheck(nickname);
+        boolean duplicate = joinService.nicknameDuplicateCheck(nickname);
         boolean idLength = nickname.length() <= 10 ? true : false;
 
         String duplicateError = "";

@@ -142,7 +142,7 @@
     });
     // 아이디 중복 여부
     function funcIdValid(){
-        $.ajax( "/idValid",
+        $.ajax( "/join/idValid",
             {
                 method: 'get',
                 data : { id: $('#userId').val()},
@@ -164,7 +164,7 @@
 
     // 닉네임 중복 여부
     function funcNicknameValid(){
-        $.ajax( "/nicknameValid",
+        $.ajax( "/join/nicknameValid",
             {
                 method: 'get',
                 data : { nickname: $('#nickname').val()},

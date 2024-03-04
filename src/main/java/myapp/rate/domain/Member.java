@@ -1,15 +1,12 @@
 package myapp.rate.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 public class Member {
     private String userId;
     private String userPw;
     private String userNickname;
     private String userName;
+    private String role;
 }
