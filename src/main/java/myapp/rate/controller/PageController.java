@@ -13,6 +13,10 @@ public class PageController {
     public String mypage(){
         return "mypage";
     }
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
     @GetMapping("/500")
     public String throw500() {
         return "join";

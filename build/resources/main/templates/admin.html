@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <style>
+        /* 스타일링 예시 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logout-btn {
+            background-color: #ff5722;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>관리자페이지임!</h1>
+    </div>
+    <div class="content">
+        <p>This is the admin page. You have access to special features here.</p>
+        <!-- 여기에 관리자 페이지의 내용을 추가할 수 있습니다. -->
+    </div>
+    <div class="footer">
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout" class="logout-btn">
+        </form>
+    </div>
+</div>
+</body>
+</html>
