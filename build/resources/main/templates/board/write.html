@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>집주인 평가 사이트</title>
-    <link th:href="@{/css/font.css}"
-        href="../css/font.css" rel="stylesheet">
+    <link th:href="@{/css/font.css}" href="../css/font.css" rel="stylesheet">
     <style>
         body {
             font-family: "Noto Sans KR";
@@ -43,14 +44,30 @@
             width: 30%;
             text-align: center;
         }
-        footer {
+        form {
+            margin-top: 20px;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
             background-color: #333;
             color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #555;
+        }
+        .field-error{
+            color: red;
         }
     </style>
 </head>
@@ -69,38 +86,37 @@
     </nav>
 </header>
 
-<div class="container" sec:authorize="isAnonymous()">
-    <h2>환영합니다!</h2>
-    <p>우리 사이트는 세입자들을 위한 소중한 정보를 제공하는 곳입니다. 여러분의 경험과 지식을 공유해주세요!</p>
+<div class="container">
+    <h2>평가 작성</h2>
+    <form action="/" method="post" th:object="${writeForm}" th:action>
+        <input type="button" th:onclick="search()" value="주소검색"/>
+        <div class="field-error" th:errors="*{address}">
+            주소 검색 안함
+        </div>
 
-    <div class="features">
-        <div class="feature">
-            <h3>평가 작성하기</h3>
-            <p>여러분의 경험을 다른 세입자들과 공유해주세요. 당신의 평가가 다른 사람에게 도움이 됩니다.</p>
+        <div style="display: flex">
+            <label for="address" style="width: 50px">주소:</label>
+            <input type="text" th:field="*{address}" id="address" style="margin: 0px; margin-left: 20px" >
         </div>
-        <div class="feature">
-            <h3>평가 검색하기</h3>
-            <p>다른 집주인들이 남긴 평가를 검색하여 유용한 정보를 찾아보세요.</p>
+
+        <label for="content">내용: (300자 제한)</label>
+        <textarea id="content" th:field="*{content}" rows="8"></textarea>
+        <div class="field-error" th:errors="*{content}">
+            내용 입력 안함
         </div>
-        <div class="feature">
-            <h3>커뮤니티 참여하기</h3>
-            <p>집주인들의 소식을 나누고 질문에 대답하며 소통할 수 있는 커뮤니티에 참여하세요.</p>
-        </div>
-    </div>
+        <button type="submit">글 작성</button>
+    </form>
 </div>
-<div class="container" sec:authorize="isAuthenticated()">
-    <h2>환영합니다!<span th:text="${session['userName']}"></span></h2>
-    <p>우리 사이트는 세입자들을 위한 소중한 정보를 제공하는 곳입니다. 여러분의 경험과 지식을 공유해주세요!</p>
-
-    <div class="features">
-        <a href="/write">글쓰기</a>
-        <a href="/map">지도 바로가기</a>
-    </div>
-</div>
-
-<footer>
-    <p>우리의 목표는 세입자들을 위한 더 나은 경험을 만드는 것입니다.</p>
-</footer>
 
 </body>
 </html>
+
+<script>
+    function search(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                $("#address").val(data.roadAddress);
+            }
+        }).open();
+    }
+</script>

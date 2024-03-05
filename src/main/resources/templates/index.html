@@ -57,7 +57,7 @@
 <body>
 
 <header>
-    <h1>집주인 평가 사이트 <span th:text="${session['userName']}"></span></h1>
+    <h1>집주인 평가 사이트</h1>
     <nav sec:authorize="isAnonymous()">
         <a href="/login" style="color: white">로그인</a> |
         <a href="/join" style="color: white">회원가입</a>
@@ -69,14 +69,14 @@
     </nav>
 </header>
 
-<div class="container">
+<div class="container" sec:authorize="isAnonymous()">
     <h2>환영합니다!</h2>
-    <p>우리 사이트는 집주인들을 위한 소중한 정보를 제공하는 곳입니다. 여러분의 경험과 지식을 공유해주세요!</p>
+    <p>우리 사이트는 세입자들을 위한 소중한 정보를 제공하는 곳입니다. 여러분의 경험과 지식을 공유해주세요!</p>
 
     <div class="features">
         <div class="feature">
             <h3>평가 작성하기</h3>
-            <p>여러분의 경험을 다른 집주인들과 공유해주세요. 당신의 평가가 다른 사람에게 도움이 됩니다.</p>
+            <p>여러분의 경험을 다른 세입자들과 공유해주세요. 당신의 평가가 다른 사람에게 도움이 됩니다.</p>
         </div>
         <div class="feature">
             <h3>평가 검색하기</h3>
@@ -88,9 +88,18 @@
         </div>
     </div>
 </div>
+<div class="container" sec:authorize="isAuthenticated()">
+    <h2>환영합니다!<span th:text="${session['userName']}"></span></h2>
+    <p>우리 사이트는 세입자들을 위한 소중한 정보를 제공하는 곳입니다. 여러분의 경험과 지식을 공유해주세요!</p>
+
+    <div class="features">
+        <a href="/write">글쓰기</a>
+        <a href="/map">지도 바로가기</a>
+    </div>
+</div>
 
 <footer>
-    <p>우리의 목표는 집주인들을 위한 더 나은 경험을 만드는 것입니다.</p>
+    <p>우리의 목표는 세입자들을 위한 더 나은 경험을 만드는 것입니다.</p>
 </footer>
 
 </body>

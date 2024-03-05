@@ -2,6 +2,7 @@ package myapp.rate.repository;
 
 import myapp.rate.domain.JoinForm;
 import myapp.rate.domain.Member;
+import myapp.rate.domain.WriteForm;
 
 public interface MemberRepository {
     /**
@@ -29,4 +30,13 @@ public interface MemberRepository {
      * @return
      */
     public Member findMember(String id);
+
+    /**
+     * 글 등록
+     * @param joinForm
+     * @return
+     */
+    public int contentSave(WriteForm writeForm);
+
+
 }
