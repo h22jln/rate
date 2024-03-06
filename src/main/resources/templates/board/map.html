@@ -82,7 +82,7 @@
 
         var infoWindow = new naver.maps.InfoWindow({
             content: '<div style="width:150px;text-align:center;padding:10px;">' +
-                mapContents[i].comment
+                (mapContents[i].comment).substring(0,5) + '...'
                 +'<a href="/content?idx=' + mapContents[i].idx + '">자세히 보기</a>' +'</div>'
         });
 

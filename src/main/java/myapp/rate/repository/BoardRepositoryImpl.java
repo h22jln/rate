@@ -50,7 +50,7 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public MapContent getMapContent(int idx) {
-        String sql = "select user_nickname, comment " +
+        String sql = "select user_nickname, comment, address " +
                 "from rate_map_write w " +
                 "inner join rate_member m on w.user_id = m.user_id  " +
                 "where w.idx = ?";
