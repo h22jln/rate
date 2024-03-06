@@ -22,34 +22,28 @@
             justify-content: space-between;
             align-items: center;
         }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
         h1 {
             text-align: center;
         }
         p {
             text-align: center;
         }
-        .features {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
-        .feature {
-            width: 30%;
-            text-align: center;
+        #main{
+            text-decoration: none;
+            color: white;
         }
     </style>
 </head>
 <body>
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var mapContents = /*[[${mapContents}]]*/ null;
+    /*]]>*/
+</script>
+
 <header>
-    <h1>집주인 평가 사이트</h1>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
     <nav sec:authorize="isAnonymous()">
         <a href="/login" style="color: white">로그인</a> |
         <a href="/join" style="color: white">회원가입</a>
@@ -65,26 +59,54 @@
 <div id="map" style="width:100%;height:400px;"></div>
 
 <script>
-    //지도를 삽입할 HTML 요소 또는 HTML 요소의 id를 지정합니다.
-    var mapDiv = document.getElementById('map'); // 'map'으로 선언해도 동일
-    //옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
-    // var map = new naver.maps.Map(mapDiv);
-
     var map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(37.3595704, 127.105399), //지도의 초기 중심 좌표
-        zoom: 13, //지도의 초기 줌 레벨
-        minZoom: 7, //지도의 최소 줌 레벨
-        zoomControl: true, //줌 컨트롤의 표시 여부
-        zoomControlOptions: { //줌 컨트롤의 옵션
-            position: naver.maps.Position.TOP_RIGHT
-        }
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10
     });
 
-    var marker = new naver.maps.Marker({
-        position: [new naver.maps.LatLng(37.3595704, 127.105399)
-            , new naver.maps.LatLng(37.3595744, 127.105399)],
-        map: map
-    });
+    var markers = [],
+        infoWindows = [];
+
+    for (var i in mapContents) {
+        var position = new naver.maps.LatLng(
+            mapContents[i].latitude,
+            mapContents[i].longitude
+        )
+
+        var marker = new naver.maps.Marker({
+            map: map,
+            position: position,
+            title: i,
+            zIndex: 100
+        });
+
+        var infoWindow = new naver.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:10px;">' +
+                mapContents[i].comment
+                +'<a href="/content?idx=' + mapContents[i].idx + '">자세히 보기</a>' +'</div>'
+        });
+
+        markers.push(marker);
+        infoWindows.push(infoWindow);
+    };
+
+    // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
+    function getClickHandler(seq) {
+        return function(e) {
+            var marker = markers[seq],
+                infoWindow = infoWindows[seq];
+
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                infoWindow.open(map, marker);
+            }
+        }
+    }
+
+    for (var i=0, ii=markers.length; i<ii; i++) {
+        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+    }
 </script>
 </body>
 

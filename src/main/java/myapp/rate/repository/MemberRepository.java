@@ -31,12 +31,5 @@ public interface MemberRepository {
      */
     public Member findMember(String id);
 
-    /**
-     * 글 등록
-     * @param joinForm
-     * @return
-     */
-    public int contentSave(WriteForm writeForm);
-
 
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - BoardRepositoryImplTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>BoardRepositoryImplTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/myapp.rate.repository.html">myapp.rate.repository</a> &gt; BoardRepositoryImplTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.567s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getMapComment()</td>
+<td class="success">0.567s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>11:17:08.147 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [myapp.rate.repository.BoardRepositoryImplTest]: BoardRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:17:08.184 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration myapp.rate.RateApplication for test class myapp.rate.repository.BoardRepositoryImplTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2024-03-06T11:17:08.310+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : Starting BoardRepositoryImplTest using Java 17.0.9 with PID 31897 (started by hjshin in /Users/hjshin/Documents/GitHub/rate)
+2024-03-06T11:17:08.310+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-03-06T11:17:08.763+09:00  INFO 31897 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-03-06T11:17:08.889+09:00  INFO 31897 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@12fcb2c3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@57bd6a8f, org.springframework.security.web.context.SecurityContextHolderFilter@2b877a54, org.springframework.security.web.header.HeaderWriterFilter@a90e2c1, org.springframework.web.filter.CorsFilter@39ab5ef7, org.springframework.security.web.authentication.logout.LogoutFilter@168142da, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@191c6e13, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b87760e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@be164d8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@517704, org.springframework.security.web.access.ExceptionTranslationFilter@4a6c0f38, org.springframework.security.web.access.intercept.AuthorizationFilter@4026461d]
+2024-03-06T11:17:08.893+09:00  WARN 31897 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@32507479. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-03-06T11:17:08.893+09:00  INFO 31897 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@32507479
+2024-03-06T11:17:09.098+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : Started BoardRepositoryImplTest in 0.867 seconds (process running for 1.255)
+2024-03-06T11:17:09.454+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-06T11:17:09.644+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a57cf90
+2024-03-06T11:17:09.645+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+mapContent = MapContent(userNickname=후후, comment=새우먹고싶다, userId=null, latitude=37.6639391768304, longitude=126.408157761988)
+mapContent = MapContent(userNickname=후후, comment=새우먹고싶다, userId=null, latitude=37.6639391768304, longitude=126.408157761988)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at 2024. 3. 6. 오전 11:17:09</p>
+</div>
+</div>
+</body>
+</html>

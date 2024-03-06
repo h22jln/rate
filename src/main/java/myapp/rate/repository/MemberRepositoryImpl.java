@@ -70,16 +70,4 @@ public class MemberRepositoryImpl implements MemberRepository {
 
         };
     }
-
-    @Override
-    public int contentSave(WriteForm writeForm) {
-        String sql = "insert into rate_map_write(user_id, map_latitude, " +
-                "map_longitude, comment, regdt) " +
-                "values(?, ?, ?, ?, NOW())";
-        return template.update(sql,
-                writeForm.getUserId()
-                ,writeForm.getLatitude()
-                ,writeForm.getLongitude()
-                ,writeForm.getContent());
-    }
 }

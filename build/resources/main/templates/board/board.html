@@ -61,9 +61,6 @@
         form button:hover {
             background-color: #555;
         }
-        .field-error{
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -81,27 +78,6 @@
     </nav>
 </header>
 
-<div class="container">
-    <h2>평가 작성</h2>
-    <form action="/" method="post" th:object="${writeForm}" th:action>
-        <input type="button" th:onclick="search()" value="주소검색"/>
-        <div class="field-error" th:errors="*{address}">
-            주소 검색 안함
-        </div>
-
-        <div style="display: flex">
-            <label for="address" style="width: 50px">주소:</label>
-            <input type="text" th:field="*{address}" id="address" style="margin: 0px; margin-left: 20px" >
-        </div>
-
-        <label for="content">내용: (300자 제한)</label>
-        <textarea id="content" th:field="*{content}" rows="8"></textarea>
-        <div class="field-error" th:errors="*{content}">
-            내용 입력 안함
-        </div>
-        <button type="submit">글 작성</button>
-    </form>
-</div>
 
 </body>
 </html>

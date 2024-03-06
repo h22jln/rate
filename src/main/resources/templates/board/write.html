@@ -35,14 +35,9 @@
         p {
             text-align: center;
         }
-        .features {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-        }
-        .feature {
-            width: 30%;
-            text-align: center;
+        #main{
+            text-decoration: none;
+            color: white;
         }
         form {
             margin-top: 20px;
@@ -74,7 +69,7 @@
 <body>
 
 <header>
-    <h1>집주인 평가 사이트</h1>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
     <nav sec:authorize="isAnonymous()">
         <a href="/login" style="color: white">로그인</a> |
         <a href="/join" style="color: white">회원가입</a>

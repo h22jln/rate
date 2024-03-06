@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import myapp.rate.domain.MapContent;
 import myapp.rate.domain.WriteForm;
+import myapp.rate.repository.BoardRepository;
 import myapp.rate.repository.MemberRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -22,9 +25,15 @@ import java.util.Map;
 @Slf4j
 public class BoardServiceImpl implements BoardService{
     private final RestTemplate restTemplate;
-    private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
 
     private static final String KAKAO_TOKEN = "90dcf471febc0f02ee5885114c1e15f5";
+
+    @Override
+    public int contentSave(WriteForm form) {
+        return boardRepository.contentSave(form);
+    }
+
     @Override
     public Map<String, String> getCordinate(String address) {
         Map<String, String> result = new HashMap<>();
@@ -64,7 +73,12 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public int contentSave(WriteForm form) {
-        return memberRepository.contentSave(form);
+    public List<MapContent> getMapContents() {
+        return boardRepository.getMapContents();
+    }
+
+    @Override
+    public MapContent getMapContent(int idx) {
+        return boardRepository.getMapContent(idx);
     }
 }
