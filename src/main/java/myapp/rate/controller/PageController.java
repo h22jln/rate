@@ -8,10 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class PageController {
-    @GetMapping("/mypage")
-    public String mypage(){
-        return "mypage";
-    }
     @GetMapping("/admin")
     public String admin(){
         return "admin";

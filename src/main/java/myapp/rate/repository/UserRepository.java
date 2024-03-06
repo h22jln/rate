@@ -1,16 +1,15 @@
 package myapp.rate.repository;
 
 import myapp.rate.domain.JoinForm;
-import myapp.rate.domain.Member;
-import myapp.rate.domain.WriteForm;
+import myapp.rate.domain.User;
 
-public interface MemberRepository {
+public interface UserRepository {
     /**
      * DB에 회원 정보 등록
      * @param joinForm
      * @return
      */
-    public int joinMember(JoinForm joinForm);
+    public int joinUser(JoinForm joinForm);
 
     /**
      * ID 중복체크
@@ -29,7 +28,7 @@ public interface MemberRepository {
      * @param id
      * @return
      */
-    public Member findMember(String id);
+    public User findUser(String id);
 
 
 }

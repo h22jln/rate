@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import myapp.rate.domain.MapContent;
 import myapp.rate.domain.WriteForm;
 import myapp.rate.repository.BoardRepository;
-import myapp.rate.repository.MemberRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

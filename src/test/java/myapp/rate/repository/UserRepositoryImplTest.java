@@ -1,20 +1,17 @@
 package myapp.rate.repository;
 
-import myapp.rate.domain.JoinForm;
-import myapp.rate.domain.Member;
+import myapp.rate.domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
 @SpringBootTest
-class MemberRepositoryImplTest {
+class UserRepositoryImplTest {
 
     @Autowired
-    MemberRepositoryImpl repository;
+    UserRepositoryImpl repository;
 
     @Test
     @DisplayName("회원가입_단순저장")
@@ -36,7 +33,7 @@ class MemberRepositoryImplTest {
     @Test
     @DisplayName("아이디로 멤버 찾")
     public void findMember(){
-        Member test = repository.findMember("shj6282");
+        User test = repository.findUser("shj6282");
         System.out.println("test = " + test);
 
     }

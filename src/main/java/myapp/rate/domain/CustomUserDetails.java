@@ -2,7 +2,6 @@ package myapp.rate.domain;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -10,24 +9,24 @@ import java.util.Collection;
 
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private final Member member;
+    private final User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
         collection.add(() -> {
-            return member.getRole();
+            return user.getRole();
         });
         return collection;
     }
 
     @Override
     public String getPassword() {
-        return member.getUserPw();
+        return user.getUserPw();
     }
 
     @Override
     public String getUsername() {
-        return member.getUserId();
+        return user.getUserId();
     }
 
     @Override

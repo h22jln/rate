@@ -3,7 +3,7 @@ package myapp.rate.domain;
 import lombok.*;
 
 @Data
-public class Member {
+public class User {
     private String userId;
     private String userPw;
     private String userNickname;

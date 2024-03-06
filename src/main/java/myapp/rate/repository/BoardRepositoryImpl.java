@@ -1,8 +1,6 @@
 package myapp.rate.repository;
 
-import lombok.AllArgsConstructor;
 import myapp.rate.domain.MapContent;
-import myapp.rate.domain.Member;
 import myapp.rate.domain.WriteForm;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -41,8 +39,7 @@ public class BoardRepositoryImpl implements BoardRepository{
                 "from rate_map_write w " +
                 "inner join rate_member m on w.user_id = m.user_id";
         try {
-            List<MapContent> contentList = template.query(sql, MapContentsRowMapper());
-            return contentList;
+            return template.query(sql, MapContentsRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -55,8 +52,7 @@ public class BoardRepositoryImpl implements BoardRepository{
                 "inner join rate_member m on w.user_id = m.user_id  " +
                 "where w.idx = ?";
         try {
-            MapContent mapContent = template.queryForObject(sql, MapContentRowMapper(), idx);
-            return mapContent;
+            return template.queryForObject(sql, MapContentRowMapper(), idx);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
