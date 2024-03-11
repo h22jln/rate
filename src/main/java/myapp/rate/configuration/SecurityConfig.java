@@ -1,6 +1,8 @@
 package myapp.rate.configuration;
 
 import lombok.AllArgsConstructor;
+import myapp.rate.handler.LoginEntryPointHandler;
+import myapp.rate.handler.LoginFaliHandler;
 import myapp.rate.handler.LoginSuccessHandler;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -45,13 +47,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/login", "/join/**").permitAll()
-                        .requestMatchers("/mypage").hasRole("USER")
+//                        .requestMatchers("/mypage").hasRole("USER")
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
+//                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new LoginEntryPointHandler())
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .successHandler(new LoginSuccessHandler())
+                        .failureHandler(new LoginFaliHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout

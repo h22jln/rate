@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내부 에러로 인한 불편을 드려 죄송합니다</title>
+    <link th:href="@{/css/font.css}"
+          href="../css/font.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Noto Sans KR";
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .apology {
+            color: #ff6347; /* Tomato */
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .contact {
+            color: #4682b4; /* Steel Blue */
+            text-decoration: none;
+        }
+
+        .contact:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>내부 에러로 인한 불편을 드려 죄송합니다</h1>
+    <p class="apology">죄송합니다!</p>
+    <p>현재 문제가 발생하여 서비스 이용에 불편을 드리고 있습니다. 문제를 해결하기 위해 최선을 다하고 있으며 빠른 시일 내에 복구하겠습니다.</p>
+    <p>문의나 추가 정보가 필요하시면 <a href="mailto:support@example.com" class="contact">여기</a>로 연락 주세요.</p>
+</div>
+</body>
+</html>

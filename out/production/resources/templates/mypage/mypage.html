@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 집주인 평가 사이트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav{
+            padding: 20px;
+            width: 200px;
+            float: left;
+            height: 100%;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav li {
+            margin-bottom: 10px;
+        }
+        nav li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        .container {
+            margin-left: 220px; /* 네비게이션 바 너비와 여백을 고려하여 설정 */
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+        #main{
+            text-decoration: none;
+            color: white;
+        }
+        #left-menu{
+            background: #f4f4f4;
+        }
+        header nav a{
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+        .table-container {
+            max-height: 400px; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
+    <nav>
+        <a href="/logout">로그아웃</a>
+    </nav>
+</header>
+
+<nav id="left-menu">
+    <ul>
+        <li><input type="button" onclick="profilea()" value="프로필"></li>
+        <li><input type="button" onclick="lista()" value="평가내역"></li>
+        <li><input type="button" onclick="settinga()" value="설정"></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div id="bodyContainer">
+        <h2>마이페이지</h2>
+        <p>이 페이지는 여러분의 개인 정보와 설정을 관리할 수 있는 곳입니다.</p>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function profilea(){
+        $.get("/mypage/profile", function(data) {
+            $("#bodyContainer").html(data);
+        });
+    }
+    function lista(){
+        $.get("/mypage/list", function(data) {
+            $("#bodyContainer").html(data);
+        });
+    }
+    function settinga(){
+        $.get("/mypage/setting", function(data) {
+            $("#bodyContainer").html(data);
+        });
+    }
+
+    function alerta(id){
+        alert(id);
+    }
+</script>

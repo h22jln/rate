@@ -1,6 +1,5 @@
 package myapp.rate.repository;
 
-import myapp.rate.domain.MapContent;
 import myapp.rate.domain.UserWriteContent;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,7 +19,7 @@ public class MypageRepositoryImpl implements MypageRepository{
 
     @Override
     public List<UserWriteContent> getContentByUserId(String userId) {
-        String sql = "select address, comment, regdt, idx" +
+        String sql = "select address, comment, regdt, idx " +
                 "from rate_map_write " +
                 "where user_id = ?";
         try {

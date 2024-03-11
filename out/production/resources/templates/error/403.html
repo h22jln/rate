@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>접근 권한이 없습니다</title>
+    <link th:href="@{/css/font.css}" href="../css/font.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Noto Sans KR";
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .back {
+            color: #4682b4; /* Steel Blue */
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>접근 권한이 없습니다</h1>
+    <p>죄송합니다. 요청하신 페이지에 접근할 권한이 없습니다.</p>
+    <p>관리자에게 문의하시거나 다른 작업을 수행하시려면 아래 링크를 이용해주세요.</p>
+    <p><a href="/" class="back">홈페이지로 돌아가기</a></p>
+</div>
+</body>
+</html>

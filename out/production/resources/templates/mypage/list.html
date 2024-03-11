@@ -1,0 +1,26 @@
+<body>
+<h1>평가내역</h1>
+<div class="table-container">
+    <table style="width: 100%;">
+        <colgroup>
+            <col style="width: 30%;">
+            <col style="width: 40%;">
+            <col style="width: 30%;">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>주소</th>
+            <th>내용</th>
+            <th>등록일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${commentList}">
+            <td th:text="${comment.address}">Address</td>
+            <td th:text="${comment.comment}">Comment</td>
+            <td th:text="${comment.regDt}">Registration Date</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>

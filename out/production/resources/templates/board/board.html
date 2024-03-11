@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>집주인 평가 사이트</title>
+    <link th:href="@{/css/font.css}" href="../css/font.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Noto Sans KR";
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+        #main{
+            text-decoration: none;
+            color: white;
+        }
+        form {
+            margin-top: 20px;
+        }
+        form input[type="text"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="/"><h1 id="main">집주인 평가 사이트</h1></a>
+    <nav sec:authorize="isAnonymous()">
+        <a href="/login" style="color: white">로그인</a> |
+        <a href="/join" style="color: white">회원가입</a>
+    </nav>
+    <nav sec:authorize="isAuthenticated()">
+        <a sec:authorize="hasRole('ADMIN')" href="/admin" style="color: white">관리자 페이지</a>
+        <a sec:authorize="hasRole('USER')" href="/mypage" style="color: white">마이페이지</a> |
+        <a href="/logout" style="color: white">로그아웃</a>
+    </nav>
+</header>
+
+
+</body>
+</html>
+
+<script>
+    function search(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                $("#address").val(data.roadAddress);
+            }
+        }).open();
+    }
+</script>
