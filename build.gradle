@@ -34,10 +34,14 @@ dependencies {
 	implementation 'org.mindrot:jbcrypt:0.4'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	//stomp
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework:spring-messaging'
 }
 
 tasks.named('test') {

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Websocket ChatRoom</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app" style="display: none;">
+    <div>
+        <h2 id="roomName"></h2>
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text">내용</label>
+        </div>
+        <input type="text" class="form-control" id="message">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="sendMessage">보내기</button>
+        </div>
+    </div>
+    <ul class="list-group" id="messageList">
+    </ul>
+    <div></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js" integrity="sha512-tL4PIUsPy+Rks1go4kQG8M8/ItpRMvKnbBjQm4d2DQnFwgcBYRRN00QdyQnWSCwNMsoY/MfJY8nHp2CzlNdtZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:inline="javascript">
+    var userName = /*[[${session.userName}]]*/ 'Guest';
+</script>
+<script>
+    $(document).ready(function() {
+        // websocket & stomp initialize
+        var sock = new SockJS("/ws/chat");
+        var ws = Stomp.over(sock);
+        var reconnect = 0;
+
+        var roomId = localStorage.getItem('wschat.roomId');
+        var sender = userName;
+
+        connect();
+
+        function findRoom() {
+            $.ajax({
+                url: '/chat/room/' + roomId,
+                method: 'GET',
+                success: function(response) {
+                    $('#roomName').text(response.roomName);
+                }
+            });
+        }
+
+        // 메시지 보냄
+        function sendMessage() {
+            var message = $('#message').val();
+            ws.send("/app/chat/message", {}, JSON.stringify({type: 'TALK', roomId: roomId, sender: sender, message: message}));
+            $('#message').val('');
+        }
+
+        // 메시지 받음
+        function recvMessage(recv) {
+            var sender = recv.type == 'ENTER' ? '[알림]' : recv.sender;
+            var messageItem = '<li class="list-group-item">' + sender + ' - ' + recv.message + '</li>';
+            $('#messageList').prepend(messageItem);
+        }
+
+        // 입장
+        function connect() {
+            // pub/sub event
+            ws.connect({}, function(frame) {
+                ws.subscribe("/topic/chat/room/" + roomId, function(message) {
+                    var recv = JSON.parse(message.body);
+                    recvMessage(recv);
+                });
+                ws.send("/app/chat/message", {}, JSON.stringify({type: 'ENTER', roomId: roomId, sender: sender}));
+            }, function(error) {
+                if (reconnect++ <= 5) {
+                    setTimeout(function() {
+                        console.log("connection reconnect");
+                        sock = new SockJS("/ws/chat");
+                        ws = Stomp.over(sock);
+                        connect();
+                    }, 10 * 1000);
+                }
+            });
+        }
+
+        $('#sendMessage').on('click', function() {
+            sendMessage();
+        });
+
+        $('#message').on('keypress', function(event) {
+            if (event.which === 13) {
+                sendMessage();
+            }
+        });
+
+        findRoom();
+        $('#app').show();
+    });
+</script>
+</body>
+</html>

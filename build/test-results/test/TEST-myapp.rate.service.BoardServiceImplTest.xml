@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="myapp.rate.service.BoardServiceImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-12T05:07:36" hostname="sinhuijin-ui-MacBookAir.local" time="0.158">
+  <properties/>
+  <testcase name="주소검색" classname="myapp.rate.service.BoardServiceImplTest" time="0.158"/>
+  <system-out><![CDATA[2024-03-12T14:07:36.007+09:00  INFO 62700 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [myapp.rate.service.BoardServiceImplTest]: BoardServiceImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-12T14:07:36.010+09:00  INFO 62700 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration myapp.rate.RateApplication for test class myapp.rate.service.BoardServiceImplTest
+cordinate.toString() = {latitude=37.5704687024445, longitude=127.071562106777}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

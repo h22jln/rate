@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="myapp.rate.repository.BoardRepositoryImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-06T02:17:09" hostname="sinhuijin-ui-MacBookAir.local" time="0.567">
+<testsuite name="myapp.rate.repository.BoardRepositoryImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-12T05:07:35" hostname="sinhuijin-ui-MacBookAir.local" time="0.237">
   <properties/>
-  <testcase name="getMapComment()" classname="myapp.rate.repository.BoardRepositoryImplTest" time="0.567"/>
-  <system-out><![CDATA[11:17:08.147 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [myapp.rate.repository.BoardRepositoryImplTest]: BoardRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-11:17:08.184 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration myapp.rate.RateApplication for test class myapp.rate.repository.BoardRepositoryImplTest
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v3.2.3)
-
-2024-03-06T11:17:08.310+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : Starting BoardRepositoryImplTest using Java 17.0.9 with PID 31897 (started by hjshin in /Users/hjshin/Documents/GitHub/rate)
-2024-03-06T11:17:08.310+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : No active profile set, falling back to 1 default profile: "default"
-2024-03-06T11:17:08.763+09:00  INFO 31897 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2024-03-06T11:17:08.889+09:00  INFO 31897 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@12fcb2c3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@57bd6a8f, org.springframework.security.web.context.SecurityContextHolderFilter@2b877a54, org.springframework.security.web.header.HeaderWriterFilter@a90e2c1, org.springframework.web.filter.CorsFilter@39ab5ef7, org.springframework.security.web.authentication.logout.LogoutFilter@168142da, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@191c6e13, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b87760e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@be164d8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@517704, org.springframework.security.web.access.ExceptionTranslationFilter@4a6c0f38, org.springframework.security.web.access.intercept.AuthorizationFilter@4026461d]
-2024-03-06T11:17:08.893+09:00  WARN 31897 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@32507479. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2024-03-06T11:17:08.893+09:00  INFO 31897 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@32507479
-2024-03-06T11:17:09.098+09:00  INFO 31897 --- [    Test worker] m.r.repository.BoardRepositoryImplTest   : Started BoardRepositoryImplTest in 0.867 seconds (process running for 1.255)
-2024-03-06T11:17:09.454+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-03-06T11:17:09.644+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a57cf90
-2024-03-06T11:17:09.645+09:00  INFO 31897 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-mapContent = MapContent(userNickname=후후, comment=새우먹고싶다, userId=null, latitude=37.6639391768304, longitude=126.408157761988)
-mapContent = MapContent(userNickname=후후, comment=새우먹고싶다, userId=null, latitude=37.6639391768304, longitude=126.408157761988)
+  <testcase name="getMapComment()" classname="myapp.rate.repository.BoardRepositoryImplTest" time="0.237"/>
+  <system-out><![CDATA[2024-03-12T14:07:35.709+09:00  INFO 62700 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [myapp.rate.repository.BoardRepositoryImplTest]: BoardRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-03-12T14:07:35.713+09:00  INFO 62700 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration myapp.rate.RateApplication for test class myapp.rate.repository.BoardRepositoryImplTest
+2024-03-12T14:07:35.717+09:00 DEBUG 62700 --- [    Test worker] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [select w.idx, user_nickname, map_latitude, map_longitude, comment from rate_map_write w inner join rate_member m on w.user_id = m.user_id]
+2024-03-12T14:07:35.718+09:00  INFO 62700 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-12T14:07:35.930+09:00  INFO 62700 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@631678e6
+2024-03-12T14:07:35.930+09:00  INFO 62700 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+mapContent = myapp.rate.domain.MapContent@52c6e959
+mapContent = myapp.rate.domain.MapContent@4b475742
+mapContent = myapp.rate.domain.MapContent@323c6f9c
+mapContent = myapp.rate.domain.MapContent@dbca149
+mapContent = myapp.rate.domain.MapContent@68550d86
+mapContent = myapp.rate.domain.MapContent@19d9ba89
+mapContent = myapp.rate.domain.MapContent@484876a1
+mapContent = myapp.rate.domain.MapContent@20163008
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
