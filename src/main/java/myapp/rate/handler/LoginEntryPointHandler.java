@@ -11,6 +11,7 @@ import java.io.IOException;
 public class LoginEntryPointHandler implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendRedirect("/login?noAuth=true");
+        String path = request.getRequestURI();
+        response.sendRedirect("/login?noAuth=true&redirect="+path);
     }
 }

@@ -24,6 +24,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @AllArgsConstructor
 public class SecurityConfig {
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFaliHandler loginFaliHandler;
+
     //AuthenticationManager Bean 등록
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -49,16 +52,16 @@ public class SecurityConfig {
                         .requestMatchers("/", "/login", "/join/**").permitAll()
 //                        .requestMatchers("/mypage").hasRole("USER")
                         .requestMatchers("/admin").hasRole("ADMIN")
-                                .anyRequest().permitAll()
-//                        .anyRequest().authenticated()
+//                                .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new LoginEntryPointHandler())
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler(new LoginSuccessHandler())
-                        .failureHandler(new LoginFaliHandler())
+                        .successHandler(loginSuccessHandler)
+                        .failureHandler(loginFaliHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
