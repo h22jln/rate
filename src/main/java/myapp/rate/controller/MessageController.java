@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,12 +21,14 @@ public class MessageController {
     private final ChatService chatService;
 
     @MessageMapping("/chat/message")
-    public void enter(ChatMessage message,
-                      @RequestParam String userId) {
+    public void enter(ChatMessage message) {
 
-        boolean isalreadyIn = chatService.isalreadyIn(message.getRoomId(), userId);
+        boolean isalreadyIn = chatService.isalreadyIn(message.getRoomId(), message.getSender()) > 1 ? true : false;
         if (!isalreadyIn && ChatMessage.MessageType.ENTER.equals(message.getType())) {
             message.setMessage(message.getSender()+"님이 입장하였습니다.");
+        }
+        else if (ChatMessage.MessageType.OUT.equals(message.getType())) {
+            message.setMessage(message.getSender()+"님이 퇴장하였습니다.");
         }
         ChatMessage chatMessage = chatService.saveMessage(message);
 

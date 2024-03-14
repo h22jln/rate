@@ -13,6 +13,7 @@ public class ChatRoom {
 
     private String roomId;
     private String roomName;
+    private String createUserId;
 
 
     public static ChatRoom create(String name) {

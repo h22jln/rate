@@ -35,8 +35,9 @@ public class ChatServiceImpl implements ChatService{
     }
 
     //채팅방 생성
-    public ChatRoom createRoom(String name) {
-        ChatRoom chatRoom = ChatRoom.create(name);
+    public ChatRoom createRoom(String roomName, String createUserId) {
+        ChatRoom chatRoom = ChatRoom.create(roomName);
+        chatRoom.setCreateUserId(createUserId);
         chatRepository.saveRoomInfo(chatRoom.getRoomId(), chatRoom);
         return chatRoom;
     }
@@ -51,7 +52,12 @@ public class ChatServiceImpl implements ChatService{
     }
 
     @Override
-    public boolean isalreadyIn(String roomId, String userId) {
+    public int isalreadyIn(String roomId, String userId) {
         return chatRepository.isalreadyIn(roomId,userId);
+    }
+
+    @Override
+    public String roomOut(String roomId, String userId) {
+        return chatRepository.roomOut(roomId,userId);
     }
 }

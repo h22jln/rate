@@ -25,9 +25,9 @@ public class ChatRepositoryImpl implements ChatRepository{
     }
 
     public void saveRoomInfo(String roomId, ChatRoom room) {
-        String sql = "insert into rate_chatting_rooms(room_id, room_name, regdt) " +
+        String sql = "insert into rate_chatting_rooms(room_id, room_name, create_user, regdt) " +
                 "values(?, ?, NOW())";
-        template.update(sql, roomId, room.getRoomName());
+        template.update(sql, roomId, room.getRoomName(),room.getCreateUserId());
     }
     public ChatMessage saveMessage(ChatMessage chatMessage) {
         LocalDateTime now = LocalDateTime.now();
@@ -77,17 +77,21 @@ public class ChatRepositoryImpl implements ChatRepository{
     }
 
     @Override
-    public boolean isalreadyIn(String roomId, String userId) {
-        String sql = "select count(*) as count " +
-                    "from rate_chatting_message "+
-                    "group by sender,room_id "+
-                    "having sender = ? and room_id = ?";
-        try {
-            Integer result = template.queryForObject(sql, Integer.class, userId, roomId);
-            return result > 0 ? true: false;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
+    public int isalreadyIn(String roomId, String userId) {
+        String sql = "select count(*) " +
+                      " from rate_chatting_message " +
+                      "where sender = ? " +
+                        "and room_id = ? ";
+        int result = template.queryForObject(sql, Integer.class, userId, roomId);
+        return result;
+    }
+
+    @Override
+    public String roomOut(String roomId, String userId) {
+        String sql = "delete from rate_chatting_message where sender = ? and room_id = ?";
+        int update = template.update(sql, userId, roomId);
+        // TODO: 에러코드 정의
+        return null;
     }
 
 

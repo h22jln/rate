@@ -11,5 +11,6 @@ public interface ChatRepository {
     public List<ChatRoom> getRoomsInfo();
     public ChatRoom getRoomInfoByRoomId(String roomId);
     public List<ChatMessage> getAllMessages(String roomId);
-    public boolean isalreadyIn(String roomId, String userId);
+    public int isalreadyIn(String roomId, String userId);
+    String roomOut(String roomId, String userId);
 }

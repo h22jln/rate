@@ -1,6 +1,7 @@
 package myapp.rate.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import myapp.rate.domain.chat.ChatMessage;
 import myapp.rate.domain.chat.ChatRoom;
@@ -34,8 +35,10 @@ public class ChatRoomController {
     // 채팅방 생성
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatService.createRoom(name);
+    public ChatRoom createRoom(@RequestParam String roomName, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String createUserName = String.valueOf(session.getAttribute("userName"));
+        return chatService.createRoom(roomName,createUserName);
     }
 
     // 채팅방 입장 화면
@@ -60,7 +63,14 @@ public class ChatRoomController {
     // 이미 들어와있는지 여부 확인
     @PostMapping("/room/isAlreadyIn")
     @ResponseBody
-    public boolean isAlreadyIn(@RequestBody Map<String, String> data) {
+    public int isAlreadyIn(@RequestBody Map<String, String> data) {
         return chatService.isalreadyIn(data.get("roomId"),data.get("sender"));
+    }
+
+    // 방 나가기
+    @PostMapping("/room/out")
+    @ResponseBody
+    public String roomOut(@RequestBody Map<String, String> data) {
+        return chatService.roomOut(data.get("roomId"),data.get("sender"));
     }
 }

@@ -14,11 +14,12 @@ public interface ChatService {
     public ChatRoom findById(String roomId);
 
     //채팅방 생성
-    public ChatRoom createRoom(String name);
+    public ChatRoom createRoom(String roomName, String createUserName);
 
     public ChatMessage saveMessage(ChatMessage message);
 
     public List<ChatMessage> getAllMessages(String roomId);
 
-    public boolean isalreadyIn(String roomId, String userId);
+    public int isalreadyIn(String roomId, String userId);
+    public String roomOut(String roomId, String userId);
 }

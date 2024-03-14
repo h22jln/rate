@@ -33,7 +33,8 @@
     <ul class="list-group" id="messageList">
         <li class="list-group-item" th:each="message : ${messages}">
             <span th:text="'[알림]'" th:if="${message.type.toString() eq 'ENTER'}"></span>
-            <span th:text="${message.sender}" th:if="${message.type.toString() ne 'ENTER'}"></span>
+            <span th:text="'[알림]'" th:if="${message.type.toString() eq 'OUT'}"></span>
+            <span th:text="${message.sender}" th:if="${message.type.toString() eq 'TALK'}"></span>
             <span> - </span>
             <span th:text="${message.message}"/>
             <span th:text="${message.formattedDateTime}"/>
@@ -57,9 +58,9 @@
         var roomId = localStorage.getItem('wschat.roomId');
         var sender = userName;
 
-        alreadyIn()
-        var isAlreadyIn = false;
+        var subscribe = null;
 
+        // 연결
         connect();
 
         function findRoom() {
@@ -72,20 +73,23 @@
             });
         }
 
-        function alreadyIn() {
-            $.ajax({
-                url: '/chat/room/isAlreadyIn',
-                method: 'POST',
-                contentType: 'application/json', // 데이터의 컨텐츠 타입 설정
-                data: JSON.stringify({
-                    roomId: roomId,
-                    sender: sender
-                }),
-                success: function(response) {
-                    isAlreadyIn = response;
-                }
-            });
-        }
+        // function alreadyIn() {
+        //     $.ajax({
+        //         url: '/chat/room/isAlreadyIn',
+        //         method: 'POST',
+        //         contentType: 'application/json', // 데이터의 컨텐츠 타입 설정
+        //         async: true,
+        //         data: JSON.stringify({
+        //             roomId: roomId,
+        //             sender: sender
+        //         }),
+        //         success: function(response) {
+        //             console.log("in"+response)
+        //             isAlreadyIn = response > 0? true : false;
+        //             console.log(isAlreadyIn)
+        //         }
+        //     });
+        // }
 
         // 메시지 보냄
         function sendMessage() {
@@ -96,7 +100,8 @@
 
         // 메시지 받음
         function recvMessage(recv) {
-            var sender = recv.type == 'ENTER' ? '[알림]' : recv.sender;
+            alert(recv.type)
+            var sender = (recv.type === 'ENTER' || recv.type === 'OUT') ? '[알림]' : recv.sender;
             var messageItem = '<li class="list-group-item">' + sender + ' - ' + recv.message + ' '+ recv.formattedDateTime + '</li>';
             $('#messageList').prepend(messageItem);
         }
@@ -105,13 +110,11 @@
         function connect() {
             // pub/sub event
             ws.connect({}, function(frame) {
-                    ws.subscribe("/topic/chat/room/" + roomId, function(message) {
-                        var recv = JSON.parse(message.body);
-                        recvMessage(recv);
-                    });
-                if(!isAlreadyIn){
-                    ws.send("/app/chat/message", {}, JSON.stringify({type: 'ENTER', roomId: roomId, sender: sender}));
-                }
+                subscribe = ws.subscribe("/topic/chat/room/" + roomId, function(message) {
+                    var recv = JSON.parse(message.body);
+                    recvMessage(recv);
+                });
+                ws.send("/app/chat/message", {}, JSON.stringify({type: 'ENTER', roomId: roomId, sender: sender}));
             }, function(error) {
                 if (reconnect++ <= 5) {
                     setTimeout(function() {
@@ -124,6 +127,28 @@
             });
         }
 
+        // 방나가기
+        function outRoom() {
+            if (confirm("방을 나가시겠습니까?")) {
+                alert('나가기');
+                var host = window.location.host;
+                $.ajax({
+                    url: '/chat/room/out',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    async: true,
+                    data: JSON.stringify({
+                        roomId: roomId,
+                        sender: sender
+                    }),
+                    success: function(response) {
+                        window.location.href = 'http://' + host+'/chat/room';
+                        ws.send("/app/chat/message", {}, JSON.stringify({type: 'OUT', roomId: roomId, sender: sender}));
+                    }
+                });
+            }
+        }
+
         $('#sendMessage').on('click', function() {
             sendMessage();
         });
@@ -132,6 +157,10 @@
             if (event.which === 13) {
                 sendMessage();
             }
+        });
+
+        $('#outRoom').on('click', function() {
+            outRoom();
         });
 
         findRoom();
