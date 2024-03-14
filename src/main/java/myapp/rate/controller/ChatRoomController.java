@@ -1,6 +1,8 @@
 package myapp.rate.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import myapp.rate.domain.chat.ChatMessage;
 import myapp.rate.domain.chat.ChatRoom;
 import myapp.rate.service.ChatService;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,8 +40,13 @@ public class ChatRoomController {
 
     // 채팅방 입장 화면
     @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId) {
+    public String roomDetail(Model model, @PathVariable String roomId,
+                             HttpServletRequest request) {
+        List<ChatMessage> messages = chatService.getAllMessages(roomId);
+        String requestURI = request.getRequestURI();
+        model.addAttribute("requestURI", requestURI);
         model.addAttribute("roomId", roomId);
+        model.addAttribute("messages", messages);
         return "/chat/roomdetail";
     }
 
@@ -47,5 +55,12 @@ public class ChatRoomController {
     @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId) {
         return chatService.findById(roomId);
+    }
+
+    // 이미 들어와있는지 여부 확인
+    @PostMapping("/room/isAlreadyIn")
+    @ResponseBody
+    public boolean isAlreadyIn(@RequestBody Map<String, String> data) {
+        return chatService.isalreadyIn(data.get("roomId"),data.get("sender"));
     }
 }

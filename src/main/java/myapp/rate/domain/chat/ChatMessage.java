@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,4 +24,8 @@ public class ChatMessage {
     private String sender;
     //내용
     private String message;
+    // 메시지 보낸 시간
+    private LocalDateTime regDt;
+    // 변환된 시간
+    private String formattedDateTime;
 }

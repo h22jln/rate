@@ -16,7 +16,9 @@
 <body>
 <div class="container" id="app" style="display: none;">
     <div>
+        <span>현재 방 - </span>
         <h2 id="roomName"></h2>
+        <a th:href="@{/chat/room}">목록으로</a>
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
@@ -25,9 +27,17 @@
         <input type="text" class="form-control" id="message">
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" id="sendMessage">보내기</button>
+            <button class="btn btn-primary" type="button" id="outRoom">방 나가기</button>
         </div>
     </div>
     <ul class="list-group" id="messageList">
+        <li class="list-group-item" th:each="message : ${messages}">
+            <span th:text="'[알림]'" th:if="${message.type.toString() eq 'ENTER'}"></span>
+            <span th:text="${message.sender}" th:if="${message.type.toString() ne 'ENTER'}"></span>
+            <span> - </span>
+            <span th:text="${message.message}"/>
+            <span th:text="${message.formattedDateTime}"/>
+        </li>
     </ul>
     <div></div>
 </div>
@@ -47,6 +57,9 @@
         var roomId = localStorage.getItem('wschat.roomId');
         var sender = userName;
 
+        alreadyIn()
+        var isAlreadyIn = false;
+
         connect();
 
         function findRoom() {
@@ -55,6 +68,21 @@
                 method: 'GET',
                 success: function(response) {
                     $('#roomName').text(response.roomName);
+                }
+            });
+        }
+
+        function alreadyIn() {
+            $.ajax({
+                url: '/chat/room/isAlreadyIn',
+                method: 'POST',
+                contentType: 'application/json', // 데이터의 컨텐츠 타입 설정
+                data: JSON.stringify({
+                    roomId: roomId,
+                    sender: sender
+                }),
+                success: function(response) {
+                    isAlreadyIn = response;
                 }
             });
         }
@@ -69,7 +97,7 @@
         // 메시지 받음
         function recvMessage(recv) {
             var sender = recv.type == 'ENTER' ? '[알림]' : recv.sender;
-            var messageItem = '<li class="list-group-item">' + sender + ' - ' + recv.message + '</li>';
+            var messageItem = '<li class="list-group-item">' + sender + ' - ' + recv.message + ' '+ recv.formattedDateTime + '</li>';
             $('#messageList').prepend(messageItem);
         }
 
@@ -77,11 +105,13 @@
         function connect() {
             // pub/sub event
             ws.connect({}, function(frame) {
-                ws.subscribe("/topic/chat/room/" + roomId, function(message) {
-                    var recv = JSON.parse(message.body);
-                    recvMessage(recv);
-                });
-                ws.send("/app/chat/message", {}, JSON.stringify({type: 'ENTER', roomId: roomId, sender: sender}));
+                    ws.subscribe("/topic/chat/room/" + roomId, function(message) {
+                        var recv = JSON.parse(message.body);
+                        recvMessage(recv);
+                    });
+                if(!isAlreadyIn){
+                    ws.send("/app/chat/message", {}, JSON.stringify({type: 'ENTER', roomId: roomId, sender: sender}));
+                }
             }, function(error) {
                 if (reconnect++ <= 5) {
                     setTimeout(function() {
