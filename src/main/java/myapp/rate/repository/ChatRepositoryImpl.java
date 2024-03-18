@@ -1,11 +1,13 @@
 package myapp.rate.repository;
 
+import lombok.SneakyThrows;
 import myapp.rate.domain.chat.ChatMessage;
 import myapp.rate.domain.chat.ChatRoom;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
@@ -26,7 +28,7 @@ public class ChatRepositoryImpl implements ChatRepository{
 
     public void saveRoomInfo(String roomId, ChatRoom room) {
         String sql = "insert into rate_chatting_rooms(room_id, room_name, create_user, regdt) " +
-                "values(?, ?, NOW())";
+                "values(?, ?, ?, NOW())";
         template.update(sql, roomId, room.getRoomName(),room.getCreateUserId());
     }
     public ChatMessage saveMessage(ChatMessage chatMessage) {
@@ -43,7 +45,8 @@ public class ChatRepositoryImpl implements ChatRepository{
 
     public List<ChatRoom> getRoomsInfo() {
         String sql = "select room_id, room_name " +
-                "from rate_chatting_rooms ";
+                "from rate_chatting_rooms " +
+                "where delete_yn <> 'y'";
         try {
             return template.query(sql, roomsInfoRowMapper());
         } catch (EmptyResultDataAccessException e) {
@@ -94,6 +97,29 @@ public class ChatRepositoryImpl implements ChatRepository{
         return null;
     }
 
+    @Override
+    public boolean isRoomCreater(String roomId, String userId) {
+        String sql = "SELECT CASE WHEN EXISTS (" +
+                "    SELECT 1" +
+                "    FROM rate_chatting_rooms" +
+                "    WHERE room_id = ?" +
+                "    AND create_user = ?" +
+                ") THEN 1 ELSE 0 END AS result";
+        Integer result = template.queryForObject(sql, Integer.class, roomId, userId);
+        return result == 1 ? true : false;
+    }
+
+    @SneakyThrows
+    @Override
+    @Transactional
+    public void roomDelete(String roomId) {
+        String sql = "update rate_chatting_rooms set delete_yn = 'y' where room_id = ?";
+        int update = template.update(sql, roomId);
+        if (update > 1){
+            throw new Exception();
+        }
+    }
+
 
     private RowMapper<ChatMessage> messageRowMapper() {
         return (rs, rowNum) -> {
@@ -115,7 +141,7 @@ public class ChatRepositoryImpl implements ChatRepository{
     private String convertFormattedDateTime(LocalDateTime dateTime){
         boolean isNotToday = !dateTime.toLocalDate().equals(LocalDate.now());
 
-        String pattern = isNotToday? "yyyy-dd-MM hh:mm" : "a hh:mm";
+        String pattern = isNotToday? "yyyy-MM-dd a hh:mm" : "a hh:mm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         String formattedDateTime = dateTime.format(formatter);
 

@@ -63,12 +63,14 @@
                     alert("방 제목을 입력해 주십시요.");
                     return;
                 } else {
-                    var params = new URLSearchParams();
-                    params.append("name",this.room_name);
-                    axios.post('/chat/room', params)
+                    axios.post('/chat/room', { roomName: this.room_name }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
                         .then(
                             response => {
-                                alert(response.data.roomName+"방 개설에 성공하였습니다.")
+                                alert(response.data.roomName + "방 개설에 성공하였습니다.")
                                 this.room_name = '';
                                 this.findAllRoom();
                             }

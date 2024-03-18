@@ -28,6 +28,7 @@
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" id="sendMessage">보내기</button>
             <button class="btn btn-primary" type="button" id="outRoom">방 나가기</button>
+            <button class="btn btn-primary" type="button" id="deleteRoom" th:if="${isRoomCreater}">방 삭제</button>
         </div>
     </div>
     <ul class="list-group" id="messageList">
@@ -132,19 +133,38 @@
             if (confirm("방을 나가시겠습니까?")) {
                 alert('나가기');
                 var host = window.location.host;
+                // $.ajax({
+                //     url: '/chat/room/out',
+                //     method: 'POST',
+                //     contentType: 'application/json',
+                //     async: true,
+                //     data: JSON.stringify({
+                //         roomId: roomId,
+                //         sender: sender
+                //     }),
+                //     success: function(response) {
+                        window.location.href = 'http://' + host+'/chat/room';
+                        ws.send("/app/chat/message", {}, JSON.stringify({type: 'OUT', roomId: roomId, sender: sender}));
+                    // }
+                // });
+            }
+        }
+
+        // 방삭제
+        function deleteRoom() {
+            if (confirm("방을 삭제하시겠습니까?")) {
+                var host = window.location.host;
                 $.ajax({
-                    url: '/chat/room/out',
+                    url: '/chat/room/delete',
                     method: 'POST',
                     contentType: 'application/json',
                     async: true,
                     data: JSON.stringify({
-                        roomId: roomId,
-                        sender: sender
+                        roomId: roomId
                     }),
                     success: function(response) {
-                        window.location.href = 'http://' + host+'/chat/room';
-                        ws.send("/app/chat/message", {}, JSON.stringify({type: 'OUT', roomId: roomId, sender: sender}));
-                    }
+                window.location.href = 'http://' + host+'/chat/room';
+                }
                 });
             }
         }
@@ -161,6 +181,10 @@
 
         $('#outRoom').on('click', function() {
             outRoom();
+        });
+
+        $('#deleteRoom').on('click', function() {
+            deleteRoom();
         });
 
         findRoom();

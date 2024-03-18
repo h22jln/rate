@@ -35,11 +35,13 @@ public class ChatRoomController {
     // 채팅방 생성
     @PostMapping("/room")
     @ResponseBody
-    public ChatRoom createRoom(@RequestParam String roomName, HttpServletRequest request) {
+    public ChatRoom createRoom(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String createUserName = String.valueOf(session.getAttribute("userName"));
-        return chatService.createRoom(roomName,createUserName);
+        String roomName = requestBody.get("roomName");
+        return chatService.createRoom(roomName, createUserName);
     }
+
 
     // 채팅방 입장 화면
     @GetMapping("/room/enter/{roomId}")
@@ -50,6 +52,10 @@ public class ChatRoomController {
         model.addAttribute("requestURI", requestURI);
         model.addAttribute("roomId", roomId);
         model.addAttribute("messages", messages);
+
+        HttpSession session = request.getSession();
+        String userId = String.valueOf(session.getAttribute("userName"));
+        model.addAttribute("isRoomCreater", chatService.isRoomCreater(roomId, userId));
         return "/chat/roomdetail";
     }
 
@@ -72,5 +78,13 @@ public class ChatRoomController {
     @ResponseBody
     public String roomOut(@RequestBody Map<String, String> data) {
         return chatService.roomOut(data.get("roomId"),data.get("sender"));
+    }
+
+    // 방 삭제
+    @PostMapping("/room/delete")
+    @ResponseBody
+    public String deleteRoom(@RequestBody Map<String, String> data) {
+        chatService.roomDelete(data.get("roomId"));
+        return "SUCCESS";
     }
 }

@@ -13,4 +13,6 @@ public interface ChatRepository {
     public List<ChatMessage> getAllMessages(String roomId);
     public int isalreadyIn(String roomId, String userId);
     String roomOut(String roomId, String userId);
+    boolean isRoomCreater(String roomId, String userId);
+    void roomDelete(String roomId);
 }

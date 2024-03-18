@@ -60,4 +60,14 @@ public class ChatServiceImpl implements ChatService{
     public String roomOut(String roomId, String userId) {
         return chatRepository.roomOut(roomId,userId);
     }
+
+    @Override
+    public boolean isRoomCreater(String roomId, String userId) {
+        return chatRepository.isRoomCreater(roomId, userId);
+    }
+
+    @Override
+    public void roomDelete(String roomId) {
+        chatRepository.roomDelete(roomId);
+    }
 }

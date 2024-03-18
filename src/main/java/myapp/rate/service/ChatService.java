@@ -21,5 +21,10 @@ public interface ChatService {
     public List<ChatMessage> getAllMessages(String roomId);
 
     public int isalreadyIn(String roomId, String userId);
+
     public String roomOut(String roomId, String userId);
+
+    public boolean isRoomCreater(String roomId, String userId);
+
+    public void roomDelete(String roomId);
 }
